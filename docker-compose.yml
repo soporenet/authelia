@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+ # Authelia for authentication
+  authelia:
+    image: docker.io/authelia/authelia:latest
+    container_name: authelia
+    restart: always
+    expose:
+      - 9091
+    networks:
+      - auth-net
+    environment:
+      - TZ=UTC
+    ports:
+      - "9091:9091"  # Exposes the Authelia dashboard (optional)
+    volumes:
+      - /u01/mydev/containers-fs-layout/authelia/config:/config
+      - /u01/mydev/containers-fs-layout/authelia/data:/data
+
+networks:
+  auth-net:
+    external:
+      name: mgmt-net
